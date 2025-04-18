@@ -1,0 +1,86 @@
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    line-height: 1.6;
+    font-size: 16px; /* 增加基础字体大小 */
+}
+
+div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: inline-block;
+    width: 80px; /* 让标签对齐 */
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    padding: 8px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.1em; /* 增加输入框字体大小 */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em; /* 增加按钮字体大小 */
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#outputArea {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 50px; /* 给输出区域一个最小高度 */
+    color: #333;
+}
+
+.output-container {
+    position: relative;
+}
+
+#copyBtn {
+    margin-left: 10px;
+    background-color: #28a745;
+}
+
+#copyBtn:hover {
+    background-color: #218838;
+}
+
+/* 当复制成功时显示的样式 */
+#copyBtn.success {
+    background-color: #218838;
+}
+
+.input-group {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.input-group div:last-child {
+    margin-bottom: 0;
+}
+
+.group-title {
+    color: #333;
+    font-size: 1.3em; /* 增加标题字体大小 */
+    margin-bottom: 10px;
+    margin-top: 20px;
+}

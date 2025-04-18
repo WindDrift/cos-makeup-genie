@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 基本的元数据设置 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单文案生成器</title>
+    <!-- 引入外部样式表 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 页面标题 -->
+    <h1>简单文案生成器</h1>
+
+    <h3 class="group-title">个人信息</h3>
+    <!-- 第一组：CN和性别 -->
+    <div class="input-group">
+        <div>
+            <label for="cn">CN：</label>
+            <input type="text" id="cn" placeholder="你的CN">
+        </div>
+        <div>
+            <label for="gender">生理性别：</label>
+            <input type="text" id="gender" placeholder="填写 男/女">
+        </div>
+    </div>
+
+    <h3 class="group-title">角色信息</h3>
+    <!-- 第二组：IP、角色和特殊需求 -->
+    <div class="input-group">
+        <div>
+            <label for="ip">IP：</label>
+            <input type="text" id="ip" placeholder="作品/游戏的名称，如: 原神">
+        </div>
+        <div>
+            <label for="role">角色：</label>
+            <input type="text" id="role" placeholder="角色名称，如: 可莉">
+        </div>
+        <div>
+            <label for="specialNeeds">特殊需求：</label>
+            <input type="text" id="specialNeeds" placeholder="如: 需要假发/不需要假发，需要美瞳等">
+        </div>
+    </div>
+
+    <h3 class="group-title">时间</h3>
+    <!-- 第三组：日期、展会、时间和地点 -->
+    <div class="input-group">
+        <div>
+            <label for="date">日期：</label>
+            <input type="text" id="date" placeholder="具体日期，如: 2024年2月1日">
+        </div>
+        <div>
+            <label for="exhibition">漫展名称：</label>
+            <input type="text" id="exhibition" placeholder="展会全名，如: CP28">
+        </div>
+        <div>
+            <label for="time">时间：</label>
+            <input type="text" id="time" placeholder="具体时段，如: 13:00-15:00">
+        </div>
+        <div>
+            <label for="location">地点：</label>
+            <input type="text" id="location" placeholder="具体场馆和位置，如: 国家会展中心 C馆">
+        </div>
+    </div>
+
+    <h3 class="group-title">预算</h3>
+    <!-- 第四组：预算 -->
+    <div class="input-group">
+        <div>
+            <label for="budget">预算：</label>
+            <input type="text" id="budget" placeholder="填写金额，如: 500元/套">
+        </div>
+    </div>
+
+    <!-- 生成按钮 -->
+    <button id="generateBtn">生成文案</button>
+
+    <!-- 输出结果区域 -->
+    <h2>生成的文案：</h2>
+    <div class="output-container">
+        <p id="outputArea">这里将显示生成的文案...</p>
+        <button id="copyBtn">复制文案</button>
+    </div>
+
+    <!-- 引入 JavaScript 脚本文件 -->
+    <script src="script.js"></script>
+</body>
+</html>
