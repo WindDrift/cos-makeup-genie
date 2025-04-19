@@ -277,3 +277,35 @@ input[type="radio"]:disabled + .radio-text {
     margin: 0;
     width: fit-content;
 }
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+    width: auto;
+}
+
+.checkbox-text {
+    white-space: nowrap;
+}
+
+.budget-range {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.budget-range input[type="number"] {
+    width: 100px;
+}
+
+.budget-separator {
+    margin: 0 5px;
+    font-size: 1em;
+}

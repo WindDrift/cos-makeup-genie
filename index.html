@@ -85,8 +85,8 @@
                     <span class="radio-text">在妆娘家</span>
                 </label>
                 <label class="radio-label">
-                    <input type="radio" name="locationType" value="上门" id="loc-visit">
-                    <span class="radio-text">上门</span>
+                    <input type="radio" name="locationType" value="妆娘上门" id="loc-visit">
+                    <span class="radio-text">妆娘上门</span>
                 </label>
                 <label class="radio-label">
                     <input type="radio" name="locationType" value="接受妆娘指定" id="loc-assigned">
@@ -107,9 +107,12 @@
     <h3 class="group-title">预算</h3>
     <!-- 第四组：预算 -->
     <div class="input-group">
-        <div>
-            <label for="budget">预算：</label>
-            <input type="text" id="budget" placeholder="填写金额，如: 500元/套">
+        <div class="budget-range">
+            <label for="budgetMin">预算：</label>
+            <input type="number" id="budgetMin" placeholder="最低金额">
+            <span class="budget-separator">至</span>
+            <input type="number" id="budgetMax" placeholder="最高金额">
+            <span>元</span>
         </div>
     </div>
 

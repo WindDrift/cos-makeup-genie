@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const minute = document.getElementById('minute');
     const timeFlexible = document.getElementById('time-flexible');
     const location = document.getElementById('location');
-    const budget = document.getElementById('budget');
+    const budgetMin = document.getElementById('budgetMin');
+    const budgetMax = document.getElementById('budgetMax');
     const generateBtn = document.getElementById('generateBtn');
     const outputArea = document.getElementById('outputArea');
     const copyBtn = document.getElementById('copyBtn');
@@ -106,7 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
             ip.value = data.ip || '';
             role.value = data.role || '';
             exhibition.value = data.exhibition || '';
-            budget.value = data.budget || '';
+            budgetMin.value = data.budgetMin || '';
+            budgetMax.value = data.budgetMax || '';
             customLocation.value = data.customLocation || '';
             
             // 恢复日期
@@ -158,7 +160,8 @@ document.addEventListener('DOMContentLoaded', function() {
             customLocation: customLocation.value,
             hour: hour.value,
             minute: minute.value,
-            budget: budget.value,
+            budgetMin: budgetMin.value,
+            budgetMax: budgetMax.value,
             contactLens: document.querySelector('input[name="contactLens"]:checked')?.value,
             timeFlexible: timeFlexible.checked
         };
@@ -224,7 +227,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     `${locationType.value}：${customLocation.value.trim()}` : 
                     locationType.value) : 
                 '',
-            budget: budget.value.trim(),
+            budget: (budgetMin.value || budgetMax.value) ? 
+                `${budgetMin.value || ''}${budgetMin.value && budgetMax.value ? '~' : ''}${budgetMax.value || ''}元` : '',
             contactLens: document.querySelector('input[name="contactLens"]:checked')?.value || ''
         };
 
