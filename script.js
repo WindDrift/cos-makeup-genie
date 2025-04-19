@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const month = document.getElementById('month');
     const day = document.getElementById('day');
     const exhibition = document.getElementById('exhibition');
+    const locExhibition = document.getElementById('loc-exhibition');
+    const locCustom = document.getElementById('loc-custom');
+    const customLocation = document.getElementById('customLocation');
+    const customLocationContainer = document.getElementById('customLocationContainer');
     const time = document.getElementById('time');
     const location = document.getElementById('location');
     const budget = document.getElementById('budget');
@@ -22,8 +26,25 @@ document.addEventListener('DOMContentLoaded', function() {
     month.value = today.getMonth() + 1;  // getMonth() 返回 0-11
     day.value = today.getDate();
 
+    // 监听展会名称变化
+    exhibition.addEventListener('input', function() {
+        locExhibition.disabled = !this.value.trim();
+        if (!this.value.trim() && locExhibition.checked) {
+            locExhibition.checked = false;
+        }
+    });
+
+    // 监听地点类型选择
+    document.querySelectorAll('input[name="locationType"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            customLocationContainer.style.display = 
+                this.id === 'loc-custom' ? 'block' : 'none';
+        });
+    });
+
     generateBtn.addEventListener('click', function() {
         // 获取所有输入值并去除首尾空格
+        const locationType = document.querySelector('input[name="locationType"]:checked');
         const values = {
             cn: cn.value.trim(),
             gender: document.querySelector('input[name="gender"]:checked')?.value || '',
@@ -32,7 +53,11 @@ document.addEventListener('DOMContentLoaded', function() {
             date: `${year.value || ''}年${month.value || ''}月${day.value || ''}日`,
             exhibition: exhibition.value.trim(),
             time: time.value.trim(),
-            location: location.value.trim(),
+            location: locationType ? 
+                (locationType.value === '指定地点' ? 
+                    `${locationType.value}：${customLocation.value.trim()}` : 
+                    locationType.value) : 
+                '',
             budget: budget.value.trim(),
             contactLens: document.querySelector('input[name="contactLens"]:checked')?.value || ''
         };

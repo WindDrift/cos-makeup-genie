@@ -68,8 +68,33 @@
             <input type="text" id="time" placeholder="具体时段，如: 13:00-15:00">
         </div>
         <div>
-            <label for="location">地点：</label>
-            <input type="text" id="location" placeholder="具体场馆和位置，如: 国家会展中心 C馆">
+            <label>地点：</label>
+            <span class="radio-group location-options">
+                <label class="radio-label">
+                    <input type="radio" name="locationType" value="在漫展" id="loc-exhibition" disabled>
+                    <span class="radio-text">在漫展</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="locationType" value="在妆娘家" id="loc-home">
+                    <span class="radio-text">在妆娘家</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="locationType" value="上门" id="loc-visit">
+                    <span class="radio-text">上门</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="locationType" value="接受妆娘指定" id="loc-assigned">
+                    <span class="radio-text">接受妆娘指定</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="locationType" value="指定地点" id="loc-custom">
+                    <span class="radio-text">指定地点</span>
+                </label>
+            </span>
+        </div>
+        <div id="customLocationContainer" style="display: none;">
+            <label for="customLocation">具体地点：</label>
+            <input type="text" id="customLocation" placeholder="请输入具体地点">
         </div>
     </div>
 
