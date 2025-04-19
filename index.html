@@ -51,6 +51,10 @@
     <!-- 第三组：日期、展会、时间和地点 -->
     <div class="input-group">
         <div>
+            <label for="exhibition">漫展名称：</label>
+            <input type="text" id="exhibition" placeholder="展会全名，如: CP28">
+        </div>
+        <div>
             <label for="date">日期：</label>
             <input type="number" id="year" placeholder="年" min="2024" max="2100" style="width: 70px;">
             <span class="date-separator">年</span>
@@ -59,13 +63,15 @@
             <input type="number" id="day" placeholder="日" min="1" max="31" style="width: 60px;">
             <span class="date-separator">日</span>
         </div>
-        <div>
-            <label for="exhibition">漫展名称：</label>
-            <input type="text" id="exhibition" placeholder="展会全名，如: CP28">
-        </div>
-        <div>
-            <label for="time">时间：</label>
-            <input type="text" id="time" placeholder="具体时段，如: 13:00-15:00">
+        <div class="form-group">
+            <label>时间：</label>
+            <input type="number" id="hour" min="0" max="23" placeholder="时">
+            <span>:</span>
+            <input type="number" id="minute" min="0" max="59" placeholder="分">
+            <label class="checkbox-label">
+                <input type="checkbox" id="time-flexible">
+                <span class="checkbox-text">接受妆娘指定</span>
+            </label>
         </div>
         <div>
             <label>地点：</label>
@@ -125,14 +131,11 @@
         </div>
     </div>
 
-    <!-- 生成按钮 -->
-    <button id="generateBtn">生成文案</button>
-
     <!-- 输出结果区域 -->
     <h2>生成的文案：</h2>
     <div class="output-container">
         <p id="outputArea">这里将显示生成的文案...</p>
-        <button id="copyBtn">复制文案</button>
+        <button id="copyBtn">生成并复制文案</button>
     </div>
 
     <h3 class="group-title">数据管理</h3>

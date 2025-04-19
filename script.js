@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const locCustom = document.getElementById('loc-custom');
     const customLocation = document.getElementById('customLocation');
     const customLocationContainer = document.getElementById('customLocationContainer');
-    const time = document.getElementById('time');
+    const hour = document.getElementById('hour');
+    const minute = document.getElementById('minute');
+    const timeFlexible = document.getElementById('time-flexible');
     const location = document.getElementById('location');
     const budget = document.getElementById('budget');
     const generateBtn = document.getElementById('generateBtn');
@@ -104,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ip.value = data.ip || '';
             role.value = data.role || '';
             exhibition.value = data.exhibition || '';
-            time.value = data.time || '';
             budget.value = data.budget || '';
             customLocation.value = data.customLocation || '';
             
@@ -112,6 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
             year.value = data.year || today.getFullYear();
             month.value = data.month || (today.getMonth() + 1);
             day.value = data.day || today.getDate();
+            
+            // 恢复时间值
+            hour.value = data.hour || '';
+            minute.value = data.minute || '';
+            timeFlexible.checked = data.timeFlexible || false;
+            hour.disabled = timeFlexible.checked;
+            minute.disabled = timeFlexible.checked;
             
             // 恢复单选按钮
             if (data.gender) {
@@ -148,9 +156,11 @@ document.addEventListener('DOMContentLoaded', function() {
             exhibition: exhibition.value,
             locationType: document.querySelector('input[name="locationType"]:checked')?.value,
             customLocation: customLocation.value,
-            time: time.value,
+            hour: hour.value,
+            minute: minute.value,
             budget: budget.value,
-            contactLens: document.querySelector('input[name="contactLens"]:checked')?.value
+            contactLens: document.querySelector('input[name="contactLens"]:checked')?.value,
+            timeFlexible: timeFlexible.checked
         };
         localStorage.setItem('cosFormData', JSON.stringify(data));
     }
@@ -181,7 +191,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    generateBtn.addEventListener('click', function() {
+    // 添加时间复选框变化监听
+    timeFlexible.addEventListener('change', function() {
+        hour.disabled = this.checked;
+        minute.disabled = this.checked;
+        if (this.checked) {
+            hour.value = '';
+            minute.value = '';
+        }
+    });
+
+    // 删除原有的 generateBtn 相关代码和事件监听器
+
+    // 修改复制按钮的事件监听器
+    copyBtn.addEventListener('click', async function() {
         // 获取所有输入值并去除首尾空格
         const locationType = document.querySelector('input[name="locationType"]:checked');
         const values = {
@@ -191,7 +214,11 @@ document.addEventListener('DOMContentLoaded', function() {
             role: role.value.trim(),
             date: `${year.value || ''}年${month.value || ''}月${day.value || ''}日`,
             exhibition: exhibition.value.trim(),
-            time: time.value.trim(),
+            time: timeFlexible.checked ? 
+                '接受妆娘指定' : 
+                (hour.value && minute.value ? 
+                    `${hour.value.padStart(2, '0')}:${minute.value.padStart(2, '0')}` : 
+                    ''),
             location: locationType ? 
                 (locationType.value === '指定地点' ? 
                     `${locationType.value}：${customLocation.value.trim()}` : 
@@ -209,7 +236,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 生成文案
         let parts = [];
-
         if (values.cn) parts.push(`CN：${values.cn}`);
         if (values.gender) parts.push(`性别：${values.gender}`);
         if (values.ip) parts.push(`IP：${values.ip}`);
@@ -223,24 +249,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 使用 "/" 连接各个部分
         const generatedText = parts.join(' / ');
-
-        // 显示生成的文案
         outputArea.textContent = generatedText;
-    });
 
-    // 添加复制按钮的事件监听器
-    copyBtn.addEventListener('click', async function() {
+        // 复制到剪贴板
         try {
-            await navigator.clipboard.writeText(outputArea.textContent);
-            
-            // 视觉反馈
-            copyBtn.textContent = '已复制！';
-            copyBtn.classList.add('success');
+            await navigator.clipboard.writeText(generatedText);
+            this.textContent = '已复制！';
+            this.classList.add('success');
             
             // 2秒后恢复原始状态
             setTimeout(() => {
-                copyBtn.textContent = '复制文案';
-                copyBtn.classList.remove('success');
+                this.textContent = '生成并复制文案';
+                this.classList.remove('success');
             }, 2000);
         } catch (err) {
             console.error('复制失败:', err);
