@@ -20,13 +20,22 @@
             <input type="text" id="cn" placeholder="你的CN">
         </div>
         <div>
-            <label for="gender">生理性别：</label>
-            <input type="text" id="gender" placeholder="填写 男/女">
+            <label>性别：</label>
+            <span class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="gender" value="男" id="gender-male">
+                    <span class="radio-text">男</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="gender" value="女" id="gender-female">
+                    <span class="radio-text">女</span>
+                </label>
+            </span>
         </div>
     </div>
 
     <h3 class="group-title">角色信息</h3>
-    <!-- 第二组：IP、角色和特殊需求 -->
+    <!-- 第二组：IP、角色 -->
     <div class="input-group">
         <div>
             <label for="ip">IP：</label>
@@ -36,10 +45,6 @@
             <label for="role">角色：</label>
             <input type="text" id="role" placeholder="角色名称，如: 可莉">
         </div>
-        <div>
-            <label for="specialNeeds">特殊需求：</label>
-            <input type="text" id="specialNeeds" placeholder="如: 需要假发/不需要假发，需要美瞳等">
-        </div>
     </div>
 
     <h3 class="group-title">时间</h3>
@@ -47,7 +52,12 @@
     <div class="input-group">
         <div>
             <label for="date">日期：</label>
-            <input type="text" id="date" placeholder="具体日期，如: 2024年2月1日">
+            <input type="number" id="year" placeholder="年" min="2024" max="2100" style="width: 70px;">
+            <span class="date-separator">年</span>
+            <input type="number" id="month" placeholder="月" min="1" max="12" style="width: 60px;">
+            <span class="date-separator">月</span>
+            <input type="number" id="day" placeholder="日" min="1" max="31" style="width: 60px;">
+            <span class="date-separator">日</span>
         </div>
         <div>
             <label for="exhibition">漫展名称：</label>
@@ -69,6 +79,24 @@
         <div>
             <label for="budget">预算：</label>
             <input type="text" id="budget" placeholder="填写金额，如: 500元/套">
+        </div>
+    </div>
+
+    <h3 class="group-title">特殊需求</h3>
+    <!-- 第五组：特殊需求 -->
+    <div class="input-group">
+        <div>
+            <label>戳瞳：</label>
+            <span class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="contactLens" value="是" id="lens-yes">
+                    <span class="radio-text">是</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="contactLens" value="否" id="lens-no">
+                    <span class="radio-text">否</span>
+                </label>
+            </span>
         </div>
     </div>
 

@@ -5,8 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const gender = document.getElementById('gender');
     const ip = document.getElementById('ip');
     const role = document.getElementById('role');
-    const specialNeeds = document.getElementById('specialNeeds');
-    const date = document.getElementById('date');
+    const year = document.getElementById('year');
+    const month = document.getElementById('month');
+    const day = document.getElementById('day');
     const exhibition = document.getElementById('exhibition');
     const time = document.getElementById('time');
     const location = document.getElementById('location');
@@ -15,19 +16,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const outputArea = document.getElementById('outputArea');
     const copyBtn = document.getElementById('copyBtn');
 
+    // 设置默认日期为当前日期
+    const today = new Date();
+    year.value = today.getFullYear();
+    month.value = today.getMonth() + 1;  // getMonth() 返回 0-11
+    day.value = today.getDate();
+
     generateBtn.addEventListener('click', function() {
         // 获取所有输入值并去除首尾空格
         const values = {
             cn: cn.value.trim(),
-            gender: gender.value.trim(),
+            gender: document.querySelector('input[name="gender"]:checked')?.value || '',
             ip: ip.value.trim(),
             role: role.value.trim(),
-            specialNeeds: specialNeeds.value.trim(),
-            date: date.value.trim(),
+            date: `${year.value || ''}年${month.value || ''}月${day.value || ''}日`,
             exhibition: exhibition.value.trim(),
             time: time.value.trim(),
             location: location.value.trim(),
-            budget: budget.value.trim()
+            budget: budget.value.trim(),
+            contactLens: document.querySelector('input[name="contactLens"]:checked')?.value || ''
         };
 
         // 检查是否所有输入框都为空
@@ -43,12 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (values.gender) parts.push(`性别：${values.gender}`);
         if (values.ip) parts.push(`IP：${values.ip}`);
         if (values.role) parts.push(`角色：${values.role}`);
-        if (values.specialNeeds) parts.push(`特殊需求：${values.specialNeeds}`);
         if (values.date) parts.push(`日期：${values.date}`);
         if (values.exhibition) parts.push(`漫展：${values.exhibition}`);
         if (values.time) parts.push(`时间：${values.time}`);
         if (values.location) parts.push(`地点：${values.location}`);
         if (values.budget) parts.push(`预算：${values.budget}`);
+        if (values.contactLens) parts.push(`戳瞳：${values.contactLens}`);
 
         // 使用 "/" 连接各个部分
         const generatedText = parts.join(' / ');
