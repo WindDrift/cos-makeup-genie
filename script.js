@@ -26,11 +26,78 @@ document.addEventListener('DOMContentLoaded', function() {
     month.value = today.getMonth() + 1;  // getMonth() 返回 0-11
     day.value = today.getDate();
 
+    // 清空表单内容但不删除存储的数据
+    function clearFormOnly() {
+        // 清空所有文本输入
+        document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
+            input.value = '';
+        });
+        
+        // 取消所有单选按钮选择
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.checked = false;
+        });
+        
+        // 重置展会地点选项状态
+        locExhibition.disabled = true;
+        
+        // 隐藏自定义地点输入框
+        customLocationContainer.style.display = 'none';
+        
+        // 清空输出区域
+        outputArea.textContent = '这里将显示生成的文案...';
+        
+        // 重置日期为当前日期
+        year.value = today.getFullYear();
+        month.value = today.getMonth() + 1;
+        day.value = today.getDate();
+    }
+
+    // 清空内容按钮的点击处理函数
+    function handleClearContent() {
+        if (confirm('确定要清空已填内容吗？（不会删除保存的数据）')) {
+            clearFormOnly();
+            return true;
+        }
+        return false;
+    }
+
+    // 完全清空按钮的点击处理函数
+    function handleClearAll() {
+        if (confirm('确定要清空所有内容并删除保存的数据吗？此操作不可恢复。')) {
+            localStorage.removeItem('cosFormData');
+            clearFormOnly();
+            return true;
+        }
+        return false;
+    }
+
     // 从 localStorage 恢复数据
     function restoreFromStorage() {
         const savedData = localStorage.getItem('cosFormData');
         if (savedData) {
             const data = JSON.parse(savedData);
+            
+            // 显示恢复提示弹窗
+            const dialog = document.getElementById('restoreDialog');
+            dialog.style.display = 'flex';
+            
+            // 处理弹窗按钮点击
+            document.getElementById('dialogCompleteBtn').onclick = function() {
+                dialog.style.display = 'none';
+            };
+            
+            document.getElementById('dialogClearBtn').onclick = function() {
+                if (handleClearContent()) {
+                    dialog.style.display = 'none';
+                }
+            };
+            
+            document.getElementById('dialogClearAllBtn').onclick = function() {
+                if (handleClearAll()) {
+                    dialog.style.display = 'none';
+                }
+            };
             
             // 恢复文本输入
             cn.value = data.cn || '';
@@ -181,35 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // 为清除按钮添加事件监听
-    document.getElementById('clearBtn').addEventListener('click', function() {
-        if (confirm('确定要清空所有内容吗？此操作不可恢复。')) {
-            // 清除 localStorage
-            localStorage.removeItem('cosFormData');
-            
-            // 清空所有文本输入
-            document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
-                input.value = '';
-            });
-            
-            // 取消所有单选按钮选择
-            document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                radio.checked = false;
-            });
-            
-            // 重置展会地点选项状态
-            locExhibition.disabled = true;
-            
-            // 隐藏自定义地点输入框
-            customLocationContainer.style.display = 'none';
-            
-            // 清空输出区域
-            outputArea.textContent = '这里将显示生成的文案...';
-            
-            // 重置日期为当前日期
-            year.value = today.getFullYear();
-            month.value = today.getMonth() + 1;
-            day.value = today.getDate();
-        }
-    });
+    // 添加主界面清空按钮事件监听器
+    document.getElementById('clearBtn').addEventListener('click', handleClearContent);
+    document.getElementById('clearAllBtn').addEventListener('click', handleClearAll);
 });

@@ -127,13 +127,26 @@
 
     <!-- 生成按钮 -->
     <button id="generateBtn">生成文案</button>
-    <button id="clearBtn" class="clear-btn">清空</button>
+    <button id="clearBtn" class="clear-btn">清空已填内容</button>
+    <button id="clearAllBtn" class="clear-btn">清空内容并删除数据</button>
 
     <!-- 输出结果区域 -->
     <h2>生成的文案：</h2>
     <div class="output-container">
         <p id="outputArea">这里将显示生成的文案...</p>
         <button id="copyBtn">复制文案</button>
+    </div>
+
+    <!-- 数据恢复提示弹窗 -->
+    <div id="restoreDialog" class="dialog-overlay">
+        <div class="dialog-content">
+            <p>已恢复上次填写的内容，您可以：</p>
+            <div class="dialog-buttons">
+                <button id="dialogCompleteBtn">继续使用</button>
+                <button id="dialogClearBtn" class="clear-btn">仅清空内容</button>
+                <button id="dialogClearAllBtn" class="clear-btn">清空并删除数据</button>
+            </div>
+        </div>
     </div>
 
     <!-- 引入 JavaScript 脚本文件 -->
