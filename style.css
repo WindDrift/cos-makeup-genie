@@ -247,3 +247,33 @@ input[type="radio"]:disabled + .radio-text {
 #clearAllBtn:hover {
     background-color: #c82333;
 }
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0;
+}
+
+.button-group button {
+    margin-top: 0;
+}
+
+.restore-btn {
+    background-color: #28a745;
+    margin-right: 10px;
+}
+
+.restore-btn:hover {
+    background-color: #218838;
+}
+
+.management-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.management-buttons button {
+    margin: 0;
+    width: fit-content;
+}

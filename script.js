@@ -248,7 +248,70 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // 添加主界面清空按钮事件监听器
-    document.getElementById('clearBtn').addEventListener('click', handleClearContent);
-    document.getElementById('clearAllBtn').addEventListener('click', handleClearAll);
+    // 按钮状态管理
+    function handleButtonAction(button, originalText, confirmText, action) {
+        if (button.dataset.confirming === 'true') {
+            // 执行操作
+            action();
+            
+            // 显示完成状态
+            button.textContent = '已完成';
+            button.disabled = true;
+            
+            // 2秒后恢复原始状态
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+                button.dataset.confirming = 'false';
+            }, 2000);
+        } else {
+            // 设置确认状态
+            button.textContent = confirmText;
+            button.dataset.confirming = 'true';
+            
+            // 5秒后如果没有确认，恢复原始状态
+            setTimeout(() => {
+                if (button.dataset.confirming === 'true') {
+                    button.textContent = originalText;
+                    button.dataset.confirming = 'false';
+                }
+            }, 5000);
+        }
+    }
+
+    // 替换原有的按钮事件处理程序
+    document.getElementById('clearBtn').addEventListener('click', function() {
+        handleButtonAction(
+            this,
+            '清空已填内容',
+            '再次点击以确认清空',
+            () => clearFormOnly()
+        );
+    });
+
+    document.getElementById('clearAllBtn').addEventListener('click', function() {
+        handleButtonAction(
+            this,
+            '清空内容并删除数据',
+            '再次点击以确认删除所有数据',
+            () => {
+                localStorage.removeItem('cosFormData');
+                clearFormOnly();
+            }
+        );
+    });
+
+    document.getElementById('restoreBtn').addEventListener('click', function() {
+        const savedData = localStorage.getItem('cosFormData');
+        handleButtonAction(
+            this,
+            '恢复已填内容',
+            savedData ? '再次点击以确认恢复' : '没有已保存的数据',
+            () => {
+                if (savedData) {
+                    restoreFromStorage();
+                }
+            }
+        );
+    });
 });
