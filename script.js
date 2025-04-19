@@ -26,6 +26,78 @@ document.addEventListener('DOMContentLoaded', function() {
     month.value = today.getMonth() + 1;  // getMonth() 返回 0-11
     day.value = today.getDate();
 
+    // 从 localStorage 恢复数据
+    function restoreFromStorage() {
+        const savedData = localStorage.getItem('cosFormData');
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            
+            // 恢复文本输入
+            cn.value = data.cn || '';
+            ip.value = data.ip || '';
+            role.value = data.role || '';
+            exhibition.value = data.exhibition || '';
+            time.value = data.time || '';
+            budget.value = data.budget || '';
+            customLocation.value = data.customLocation || '';
+            
+            // 恢复日期
+            year.value = data.year || today.getFullYear();
+            month.value = data.month || (today.getMonth() + 1);
+            day.value = data.day || today.getDate();
+            
+            // 恢复单选按钮
+            if (data.gender) {
+                document.querySelector(`input[name="gender"][value="${data.gender}"]`).checked = true;
+            }
+            if (data.locationType) {
+                const locationEl = document.querySelector(`input[name="locationType"][value="${data.locationType}"]`);
+                if (locationEl) {
+                    locationEl.checked = true;
+                    if (data.locationType === '指定地点') {
+                        customLocationContainer.style.display = 'block';
+                    }
+                }
+            }
+            if (data.contactLens) {
+                document.querySelector(`input[name="contactLens"][value="${data.contactLens}"]`).checked = true;
+            }
+
+            // 更新展会地点选项状态
+            locExhibition.disabled = !exhibition.value.trim();
+        }
+    }
+
+    // 保存数据到 localStorage
+    function saveToStorage() {
+        const data = {
+            cn: cn.value,
+            gender: document.querySelector('input[name="gender"]:checked')?.value,
+            ip: ip.value,
+            role: role.value,
+            year: year.value,
+            month: month.value,
+            day: day.value,
+            exhibition: exhibition.value,
+            locationType: document.querySelector('input[name="locationType"]:checked')?.value,
+            customLocation: customLocation.value,
+            time: time.value,
+            budget: budget.value,
+            contactLens: document.querySelector('input[name="contactLens"]:checked')?.value
+        };
+        localStorage.setItem('cosFormData', JSON.stringify(data));
+    }
+
+    // 添加输入事件监听器
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        input.addEventListener('change', saveToStorage);
+        input.addEventListener('input', saveToStorage);
+    });
+
+    // 页面加载时恢复数据
+    restoreFromStorage();
+
     // 监听展会名称变化
     exhibition.addEventListener('input', function() {
         locExhibition.disabled = !this.value.trim();
@@ -106,6 +178,38 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (err) {
             console.error('复制失败:', err);
             alert('复制失败，请手动复制');
+        }
+    });
+
+    // 为清除按钮添加事件监听
+    document.getElementById('clearBtn').addEventListener('click', function() {
+        if (confirm('确定要清空所有内容吗？此操作不可恢复。')) {
+            // 清除 localStorage
+            localStorage.removeItem('cosFormData');
+            
+            // 清空所有文本输入
+            document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
+                input.value = '';
+            });
+            
+            // 取消所有单选按钮选择
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // 重置展会地点选项状态
+            locExhibition.disabled = true;
+            
+            // 隐藏自定义地点输入框
+            customLocationContainer.style.display = 'none';
+            
+            // 清空输出区域
+            outputArea.textContent = '这里将显示生成的文案...';
+            
+            // 重置日期为当前日期
+            year.value = today.getFullYear();
+            month.value = today.getMonth() + 1;
+            day.value = today.getDate();
         }
     });
 });

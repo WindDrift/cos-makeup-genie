@@ -184,3 +184,12 @@ input[type="radio"]:disabled + .radio-text {
     color: #999;
     cursor: not-allowed;
 }
+
+.clear-btn {
+    background-color: #dc3545;
+    margin-left: 10px;
+}
+
+.clear-btn:hover {
+    background-color: #c82333;
+}
